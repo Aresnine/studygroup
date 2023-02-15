@@ -40,3 +40,12 @@ tsdn --respawn --transpile-only app.ts
 
 ![image-20230210232920817](assets/image-20230210232920817.png)
 
+6、使用tsd工具性进行类型检查
+
+- `expectType<你预期的类型>(表达式或变量等)` 检查预期类型与表达式或变量的类型是否一致
+- `expectNotType`（检查预期类型与表达式或变量的类型是否不同）
+- `expectAssignable`（检查表达式或变量的类型是否能赋值给预期类型）
+
+7、declare
+
+类型声明
