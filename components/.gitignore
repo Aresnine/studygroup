@@ -1,0 +1,16 @@
+**/node_modules/
+**/coverage/
+**/.pnpm-debug
+**/dist
+package-lock.json
+.DS_Store
+.spress
+.vercel
+dist
+.idea
+/test
+*.zip
+demo
+pnpm-lock.yaml
+node_modules/
+cache
