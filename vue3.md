@@ -145,7 +145,147 @@
 **实现原理：**
 
 - 通过Proxy（代理）：拦截对象中任意属性的变化，包括属性值的读、改、新增、删除。
-- 通过refect（反射）：对源对象的属性进行操作。
 
+- 通过reflect（反射）：对源对象的属性进行操作。
 
+  ```js
+  new Proxy(data, {
+      // 拦截读取属性值
+      get (target, prop) {
+          return Reflect.get(target, prop)
+      },
+      // 拦截设置属性值或添加新属性
+      set (target, prop, value) {
+          return Reflect.set(target, prop, value)
+      },
+      // 拦截删除属性
+      deleteProperty (target, prop) {
+          return Reflect.deleteProperty(target, prop)
+      }
+  })
+  
+  proxy.name = 'tom'   
+  ```
 
+  
+
+#### 8.computed函数
+
+- 与vue2.0中的computed配置功能一致
+
+#### 9.watch函数
+
+- 与vue2.0中的watch配置功能一致
+
+- 有两个小坑：
+
+  ​		监视reactive定义的响应式数据时：oldValue无法正确获取、强制开启了深度监视（deep配置失效）。
+
+  ​		监视reactive定义的响应数据中某个属性时：deep配置有效
+
+  ```js
+  //情况一：监视ref定义的响应式数据
+  watch(sum,(newValue,oldValue)=>{
+  	console.log('sum变化了',newValue,oldValue)
+  },{immediate:true})
+  
+  //情况二：监视多个ref定义的响应式数据
+  watch([sum,msg],(newValue,oldValue)=>{
+  	console.log('sum或msg变化了',newValue,oldValue)
+  }) 
+  
+  /* 情况三：监视reactive定义的响应式数据
+  			若watch监视的是reactive定义的响应式数据，则无法正确获得oldValue！！
+  			若watch监视的是reactive定义的响应式数据，则强制开启了深度监视 
+  */
+  watch(person,(newValue,oldValue)=>{
+  	console.log('person变化了',newValue,oldValue)
+  },{immediate:true,deep:false}) //此处的deep配置不再奏效
+  
+  //情况四：监视reactive定义的响应式数据中的某个属性
+  watch(()=>person.job,(newValue,oldValue)=>{
+  	console.log('person的job变化了',newValue,oldValue)
+  },{immediate:true,deep:true}) 
+  
+  //情况五：监视reactive定义的响应式数据中的某些属性
+  watch([()=>person.job,()=>person.name],(newValue,oldValue)=>{
+  	console.log('person的job变化了',newValue,oldValue)
+  },{immediate:true,deep:true})
+  
+  //特殊情况
+  watch(()=>person.job,(newValue,oldValue)=>{
+      console.log('person的job变化了',newValue,oldValue)
+  },{deep:true}) //此处由于监视的是reactive素定义的对象中的某个属性，所以deep配置有效
+  ```
+
+  
+
+#### 10.watchEffect函数
+
+- watch的套路是：既要指明监视的属性，也要指明监视的回调。
+
+- watchEffect的套路：不用指明监视那个属性，监视的回调中用到了那个属性，那就监视那个属性
+
+- watchEffect有点像compute：
+
+  ​      但computed注重的是计算出来的值（毁掉函数里面的返回值），必须要写retrun。
+
+  ​      而watchEffect注重的是过程（回调函数中的函数体），所以不需要写返回值。
+
+- ```js
+  //watchEffect所指定的回调中用到的数据只要发生变化，则直接重新执行回调。
+  watchEffect(()=>{
+      const x1 = sum.value
+      const x2 = person.age
+      console.log('watchEffect配置的回调执行了')
+  })
+  ```
+
+  
+
+#### 11.生命周期
+
+##### 11.1vue2.0的生命周期
+
+<img src="D:\Desktop\学习资料2023.2.7\gitHub\studygroup\v2-6f2c97f045ba988851b02056c01c8d62_720w.png" style="zoom: 33%;" />
+
+##### 11.2vue3.0的生命周期
+
+<img src="D:\Desktop\学习资料2023.2.7\gitHub\studygroup\v2-0d19fe408c78b795af5410eb2ccf4b0a_720w.webp" style="zoom: 50%;" />
+
+- vue3.0中可以继续使用vue2.0中的生命周期钩子函数，但有两个被更名：
+
+- ​        beforeDestroy改名为beforeUnmount
+
+- ​		destroyed改名为unmounted
+
+- Vue3.0也提供了 Composition API 形式的生命周期钩子，与Vue2.x中钩子对应关系如下：
+
+  - - `beforeCreate`===>`setup()`
+    - `created`=======>`setup()`
+    - `beforeMount` ===>`onBeforeMount`
+    - `mounted`=======>`onMounted`
+    - `beforeUpdate`===>`onBeforeUpdate`
+    - `updated` =======>`onUpdated`
+    - `beforeUnmount` ==>`onBeforeUnmount`
+    - `unmounted` =====>`onUnmounted`
+
+#### 12.自定义hook函数
+
+- hook：本质是一个函数，把setup函数中使用的Composition API进行了封装，类似于vue2中的minxin。
+
+- 优势：复用代码，让setup中的逻辑更清楚易懂
+
+  
+
+运行该命令 lint:prettier 就可以让指定的文件都按照 prettier 的配置规则文件格式化代码。
+
+```shell
+pnpm lint:prettier
+```
+
+运行该命令 `lint:eslint` 就可以让指定的文件都按照 eslint 的配置规则文件进行错误检验。
+
+```
+pnpm lint:eslint
+```
