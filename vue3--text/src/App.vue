@@ -1,11 +1,15 @@
 <script setup lang="ts">
 import HelloWorld from "./components/HelloWorld.vue";
+import httpHelper from "@/api/httpHelper";
+
+httpHelper.get("/api/joke", {}, (res: any) => {
+	console.log("httpHelper.get", res);
+});
 </script>
 
 <template>
 	<!-- <router-link class="a_link" to="/">home</router-link>
 	<router-view></router-view> -->
-	<!-- 测试1111 -->
 	<div>
 		<a href="https://vitejs.dev" target="_blank">
 			<img src="/vite.svg" class="logo" alt="Vite logo" />
