@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import HelloWorld from "./components/HelloWorld.vue";
 import httpHelper from "@/api/httpHelper";
-
+import { useUserStore } from '@/store/user'
+useUserStore().setUser(888);
+console.log(useUserStore().user,'kkkkkkkkkkkk');
 httpHelper.get("/api/joke", {}, (res: any) => {
 	console.log("httpHelper.get", res);
 });
