@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gride布局</title>
+    <style>
+        .container {
+            /* 设置容器 */
+            display: grid;
+            width: 300px;
+            height: 300px;
+            background-color: pink;
+            grid-template-columns: 1fr 1fr 1fr;
+            grid-template-rows: 1fr 1fr 1fr;
+            /* 子项在单元格中的对齐方式：水平 */
+            /* justify-items: center; */
+            /* justify-items: end; */
+            /* justify-items: start; */
+            /* 子项在单元格中的对齐方式：水平 */
+            /* align-items: center;
+            align-items: end; */
+            /* 复合属性 垂直 水平 */
+            place-items: center right;
+        }
+
+        .item {
+            width: 50px;
+            height: 50px;
+            box-sizing: border-box;
+            border: 1px solid #000;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="item item1">1</div>
+        <div class="item item2">2</div>
+        <div class="item item3">3</div>
+        <div class="item item4">4</div>
+        <div class="item item5">5</div>
+        <div class="item item6">6</div>
+        <div class="item item7">7</div>
+        <div class="item item8">8</div>
+        <div class="item item9">9</div>
+    </div>
+
+</body>
+
+</html>

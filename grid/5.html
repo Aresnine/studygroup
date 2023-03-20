@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gride布局</title>
+    <style>
+        .container {
+            /* 设置容器 */
+            display: grid;
+            width: 300px;
+            height: 300px;
+            background-color: pink;
+            /* 合并单元格 */
+            grid-template:
+                "a1 a1 a2" 1fr
+                "a1 a1 a2" 1fr
+                "a3 a4 a4" 1fr / 1fr 1fr 1fr;
+            /* 列间距 */
+            /* grid-column-gap: 20px; */
+            /* column-gap: 30px; */
+            /* 行间距 */
+            /* grid-row-gap: 20px; */
+            /* row-gap: 10px; */
+            /* 行 列 */
+            /* grid-gap: 20px 5px; */
+            gap: 10px 30px;
+        }
+
+        .item {
+            box-sizing: border-box;
+            border: 1px solid #000;
+        }
+
+        .item1 {
+            grid-area: a1;
+        }
+
+        .item2 {
+            grid-area: a2;
+        }
+
+        .item3 {
+            grid-area: a3;
+        }
+
+        .item4 {
+            grid-area: a4;
+        }
+
+        .flex-container {
+            width: 300px;
+            height: 300px;
+            background-color: cyan;
+            display: flex;
+            flex-wrap: wrap;
+            align-content: flex-start;
+            /* row-gap: 10px;
+            column-gap: 20px; */
+            gap: 10px;
+
+        }
+
+        .flex-container>div {
+            box-sizing: border-box;
+            width: 100px;
+            height: 100px;
+            border: 1px solid #000;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="item item1">1</div>
+        <div class="item item2">2</div>
+        <div class="item item3">3</div>
+        <div class="item item4">4</div>
+    </div>
+    <div class="flex-container">
+        <div class="flex1">1</div>
+        <div class="flex2">2</div>
+        <div class="flex3">3</div>
+        <div class="flex4">4</div>
+        <div class="flex5">5</div>
+    </div>
+</body>
+
+</html>
